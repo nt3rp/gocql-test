@@ -12,7 +12,7 @@ var (
 )
 
 func init() {
-	cluster := gocql.NewCluster("127.0.0.1")
+	cluster := gocql.NewCluster("127.0.0.1", "127.0.0.2")
 	cluster.Consistency = gocql.All
 	cluster.Keyspace = "experiment"
 	cluster.RetryPolicy = &gocql.SimpleRetryPolicy{NumRetries: 6}
@@ -34,7 +34,9 @@ func main() {
 	for _, key1 := range keys1 {
 		for _, key2 := range keys2 {
 			for _, key3 := range keys3 {
-				gocql_case(key1, key2, key3)
+				for i := 0; i < 1000; i += 1 {
+					gocql_case(key1, key2, key3)
+				}
 			}
 		}
 	}
